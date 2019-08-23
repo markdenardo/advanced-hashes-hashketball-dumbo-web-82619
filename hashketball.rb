@@ -39,7 +39,7 @@ def game_hash
       :number => 1,
       :shoe => 19,
       :points => 26,
-      :rebounds => 12,
+      :rebounds => 11,
       :assists => 6,
       :steals => 3,
       :blocks => 8,
@@ -71,13 +71,13 @@ def game_hash
       :blocks => 7,
       :slam_dunks => 2
      }, 
-     {:player_name => "Bismak Biyombo",
+     {:player_name => "Bismack Biyombo",
       :number => 0,
       :shoe => 16,
       :points => 12,
       :rebounds => 4,
       :assists => 7,
-      :steals => 7,
+      :steals => 22,
       :blocks => 15,
       :slam_dunks => 10
      }, 
@@ -101,13 +101,13 @@ def game_hash
       :blocks => 1,
       :slam_dunks => 0
      }, 
-     {:player_name => "Brendan Haywood",
+     {:player_name => "Kemba Walker",
       :number => 33,
       :shoe => 15,
       :points => 6,
       :rebounds => 12,
       :assists => 12,
-      :steals => 22,
+      :steals => 7,
       :blocks => 5,
       :slam_dunks => 12
      }
@@ -131,3 +131,74 @@ def num_points_scored(players_name)
   end
 end
 
+def shoe_size(players_name)
+  #returns shoe size for player passed in
+  game_hash.each do |place, team|
+    team.each do |attribute, data|
+      if attribute == :players
+        data.each do |player|
+          if player[:player_name] == players_name
+            return player[:shoe]
+          end        
+        end
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  game_hash.each do |place, team|
+      if team[:team_name]==team_name
+      return team[:colors]
+      end
+  end
+end
+
+def team_names
+  game_hash.map do |place, team|
+    team[:team_name]
+  end
+end
+
+def player_numbers(team_name)
+  nums=[]
+  game_hash.map do |place, team|
+    if team[:team_name] == team_name
+      team.each do |attributes, data|
+        if attributes == :players
+          data.each do |player|
+            nums << player[:number]
+          end
+        end
+      end
+    end
+  end
+  nums
+end
+
+def player_stats(players_name)
+  new_hash = {}
+  game_hash.each do |place,team|
+    team.each do |attributes, data|
+      if attributes == :players
+        data.each do |player|
+          if player[:player_name] == players_name
+            new_hash = player.delete_if do |k,v|
+              k == :player_name
+            end
+          end
+        end   
+      end 
+    end
+  end
+  new_hash
+end
+
+def big_shoe_rebounds
+  game_hash.each do |place, team|
+      team[:players].each do |player|
+        binding.pry
+      end
+  end
+end
+  
